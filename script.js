@@ -32,7 +32,8 @@ addContent.addEventListener("click" , ()=>{
 
 function everyThing() {
     theMainWord = TheWord.value 
-    let afterSplit = theMainWord.split("");
+    let afterReplace =   theMainWord.replace(/\s/g,"")
+    let afterSplit = afterReplace.split("");
     build(afterSplit);
     theIntval = setInterval(()=>{
         check(afterSplit)
