@@ -1,28 +1,51 @@
 let TheWord = document.getElementById("TheWord");
-let toSendTheWord = document.getElementById("toSendTheWord");
-/* let InpTypeYourAnser = document.querySelectorAll(".InpTypeYourAnser") */
+let toSendTheWord = document.getElementById("toSendTheWord"); 
 let theMainWord = "";
 let yourPostion = 0;
 let nice = false;
 let anserDiv = document.getElementById("anserDiv");
-var theIntval 
+var theIntval ;
+let TheSelect = document.getElementById("TheSelect")
+let selecContent = document.getElementById("selecContent");
+let inpAddContent = document.getElementById("inpAddContent");
+let addContent = document.getElementById("addContent");
 
 
 toSendTheWord.addEventListener("click" , ()=>{
+    everyThing()
+} )
+
+TheWord.addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        everyThing()
+    }
+  })
+
+TheSelect.onchange = function(){
+    selecContent.innerHTML = TheSelect.value;
+}
+     
+addContent.addEventListener("click" , ()=>{
+    TheSelect.innerHTML += ` <option value=`+inpAddContent.value+`>`+inpAddContent.value+`</option>`;
+    console.log(TheSelect);
+})
+
+function everyThing() {
     theMainWord = TheWord.value 
     let afterSplit = theMainWord.split("");
     build(afterSplit);
     theIntval = setInterval(()=>{
         check(afterSplit)
-    }, 1000);
-    
-})
-
+        
+    }, 100);
+}
 
 
 
 function  build(theLength) {
-    if (anserDiv.children.length >theLength.length ) {
+    yourPostion = 0;
+    
+    if (anserDiv.children.length >theLength.length||TheWord.value === "" ) {
        return
     }
     else if(anserDiv.children.length <theLength.length){
@@ -35,18 +58,19 @@ function  build(theLength) {
         } 
     }
     
+    TheWord.style.display = "none";
+    TheSelect.style.display = "none";
     
 }
    
 
 function check(theword) {
+    
 let InpTypeYourAnser = document.querySelectorAll(".InpTypeYourAnser");
-
    if(theword[yourPostion] ===InpTypeYourAnser[yourPostion].value) {
-        console.log("hello world");
-        nice = true;
-        
+        nice = true;        
    }
+
    else if(theword[yourPostion] !==InpTypeYourAnser[yourPostion].value){
     nice = false;
    }
@@ -57,12 +81,17 @@ let InpTypeYourAnser = document.querySelectorAll(".InpTypeYourAnser");
   
    if (yourPostion ===  InpTypeYourAnser.length) {
     alert("you win");
-    clearInterval(theIntval)    
+    clearInterval(theIntval);
+    TheWord.style.display = "flex"; 
+    TheSelect.style.display = "flex";
+    TheWord.value = ""; 
+    anserDiv.innerHTML ="";
+    selecContent.innerHTML = 'select content';
+    
+   
    }else{
     InpTypeYourAnser[yourPostion].focus()
    }
-   
-
 }
 
 
